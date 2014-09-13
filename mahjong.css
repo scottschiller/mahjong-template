@@ -1,0 +1,231 @@
+/* Mahjong card template */
+
+body {
+ font-family: "Helvetica Neue", helvetica, verdana, arial, sans-serif;
+ font-size: 16px;
+ letter-spacing: 1px;
+ /* stop iOS from putting highlights on touch events */
+ -webkit-tap-highlight-color: transparent;
+ /* fix case where iPhone + iOS 7 likes to do weird crap with letter sizing. */
+ -webkit-text-size-adjust: 100%;
+ /* various "don't let selection happen" rules */
+ -webkit-touch-callout: none;
+ -webkit-user-select: none;
+ -moz-user-select: none;
+ -ms-user-select: none;
+ user-select: none;
+}
+
+h1, h2 {
+ font-size: 1em;
+ font-weight: bold;
+ text-align: center;
+ color: #333;
+ text-transform: uppercase;
+ margin-bottom: 0px;
+}
+
+#header {
+ position: relative;
+}
+
+#header h2,
+h2.first {
+ margin-top: 0px;
+}
+
+#header h2.value {
+ position: absolute;
+ right: 1em;
+ top: 0px;
+ margin-top: 1em;
+ font-size: 0.5em;
+}
+
+#content {
+ position: relative;
+ margin: 0px auto;
+ padding: 0px 0.5em 0px 0.5em;
+}
+
+ul,
+li {
+ margin: 0px;
+ padding: 0px;
+}
+
+ul {
+ list-style-type: none;
+ margin-top: 0.25em;
+ padding: 0px;
+}
+
+li {
+ position: relative;
+ font-weight: bold;
+ background: #fff;
+ border: 1px solid #ddd;
+ padding: 0.125em 0.25em;
+ margin-bottom: 0.25em;
+ transition: background 0.15s ease-in-out;
+ transition-property: background, opacity;
+}
+
+li:hover {
+ border: 1px solid #999;
+}
+
+li,
+h2 {
+ cursor: pointer;
+}
+
+h2 {
+ transition: opacity 0.15s ease-in-out;
+}
+
+#content {
+ -webkit-column-count: 2;
+ -moz-column-count: 2;
+ column-count: 2;
+}
+
+div.group {
+ /* try to keep these things together, avoid wrapping */
+ -webkit-column-break-inside: avoid;
+ -moz-column-break-inside: avoid;
+ column-break-inside: avoid;
+ margin-bottom: 0px;
+ padding-bottom: 0.5em;
+}
+
+
+#content.active h2.inactive,
+#content.active li {
+  opacity: 0.25;
+}
+
+#content.active h2.inactive:hover,
+#content.active li:not(.active):hover {
+  opacity: 0.75;
+  transition: none;
+}
+
+#content li * {
+ /* only the LI should get mouse/touch events. */
+ pointer-events: none;
+}
+
+#content li.active {
+ opacity: 1;
+ -webkit-filter: none;
+ background-color: #eee;
+}
+
+li.active span.pattern {
+ padding-left: 0px;
+}
+
+span.pattern,
+span.value,
+h2.value {
+ /* default: blue-ish */
+ position: relative;
+ display: inline-block;
+ color: #003399;
+ /* padding-right: 0.3em; */
+ pointer-events: none;
+}
+
+span.value {
+ position: absolute;
+ top: 0px;
+ right: 0px;
+ min-width: 3em;
+ margin: 0px;
+ padding: 0.125em 0px 0px 0px;
+ text-align: center;
+}
+
+b {
+ /* reddish */
+ color: #cc3333;
+}
+
+i {
+ /* green-ish */
+ color: #00aa00;
+ font-style: normal;
+}
+
+em {
+ /* comment/description/note */
+ font-size: 58%;
+ display: block;
+ font-weight: 300;
+ font-style: normal;
+ letter-spacing: 0px;
+}
+
+em.alternate {
+ /* sneaky: don't actually show, but use as a linebreak. */
+ overflow: hidden;
+ height: 0px;
+}
+
+@media print {
+
+ /* try to fit everything on one page. 16px if you like 2+ pages. */
+
+ body {
+  margin: 0px !important;
+  padding: 0px !important;
+  font-size: 11px !important;
+  zoom: 1 !important;
+ }
+
+ ul {
+  /* less padding */
+  padding: 0px 0.5em 0px 0.5em;
+ }
+
+ li {
+  background-size: 4px 2px !important;
+ }
+
+ .page-break-after {
+   /*
+    * Potentially dangerous, but should work out most of the time.
+    * This is a correction to ensure the second page starts with the right group
+    * (at least, for the 2014 set.)
+    */
+   page-break-after: always;
+ }
+
+ #content {
+  /* probably not supported in print? reset just to be sure. */
+  -webkit-column-count: 1;
+  -moz-column-count: 1;
+  column-count: 1;
+ }
+
+ .group {
+  display: inline-block;
+  width: 49.5%;
+  vertical-align: top;
+ }
+
+ /* print-specific adjustments for the 2014 set */
+ .group.print-tweak-2468 h2 {
+  margin-top: 0px;
+ }
+
+ .group.print-tweak-13579 {
+  margin-top: -1.5em;
+ }
+
+ .group.print-tweak-like-numbers {
+  margin-top: -1.25em;
+ }
+
+}

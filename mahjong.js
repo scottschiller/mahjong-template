@@ -273,7 +273,7 @@
       contentWidth = (window.innerWidth || document.body.clientWidth) / (!oldIE ? 2 : 1);
 
       // tweak to prevent overlap of left + right sides. adjust to taste.
-      scaleOffset = 1;
+      scaleOffset = 0.75;
 
       scale = (contentWidth / largest.width) * scaleOffset;
 
@@ -331,28 +331,28 @@
 
   utils.events.add(window, 'load', function() {
 
-    var i, j, value;
+    var i, j;
 
     isMobile = navigator.userAgent.match(/mobile/i);
     canZoom = (navigator.userAgent.match(/chrome|safari/i) && !isMobile && window.location.href.match(/zoom/i));
     content = document.getElementById('content');
     patterns = document.getElementsByClassName ? document.getElementsByClassName('pattern') : document.getElementsByTagName('span');
-    value = document.querySelectorAll('span.value');
 
     for (i=0, j=patterns.length; i<j; i++) {
       tmp = patterns[i].offsetWidth;
       if (!largest || tmp > largest.width) {
         largest = {
           offset: i,
-          // slight offset on right value width, a little extra spacing.
-          // not sure this will work all the time, probably a bit fiddly.
-          width: tmp + (value && value[i] ? value[i].offsetWidth * 2.5 : 0)
+          width: tmp
         };
       }
     }
 
-    // utils.events.add(window, 'gesturechange', events.resize);
-    utils.events.add(window, 'resize', events.resize);
+    if (!isMobile) {
+      // iOS will fire resize when zooming, undesirable.
+      utils.events.add(window, 'resize', events.resize);
+    }
+
     utils.events.add(window, 'orientationchange', events.resize);
     utils.events.add(document, 'mousedown', events.mousedown);
     utils.events.add(document, 'keydown', events.keydown);

@@ -190,7 +190,15 @@ em.alternate {
  }
 
  li {
-  background-size: 4px 2px !important;
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  border-style: dotted;
+ }
+
+ h2 {
+  margin: 0px !important;
+  padding: 0px !important;
  }
 
  .page-break-after {
